@@ -1,6 +1,6 @@
-var should = require('should');
-var sinon = require('sinon');
-var pcsc = require('../lib/pcsclite');
+const should = require('should');
+const sinon = require('sinon');
+const pcsc = require('../lib/pcsclite');
 
 describe('Testing PCSCLite private', function() {
 

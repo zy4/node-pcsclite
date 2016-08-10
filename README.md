@@ -1,39 +1,38 @@
 # node-pcsclite
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/santigimeno/node-pcsclite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Bindings over pcsclite to access Smart Cards. Starting with version **0.4.0** it works in **Linux**, **OS X** and **Windows**.
 
 ## Installation
 
-You'll need a node version installed in the system. You have several options:
+In order to install the package you need to **have installed in the system the
+pcsclite libraries**.
 
-* Download and install it from the [node website](http://nodejs.org/)
-* Install it from your own distro. For the Debian users:
+In **macOS** and **Windows** you **don't have to install** anything.
 
-    `apt-get install nodejs nodejs-legacy`
-
-* Use [nodesource repository](https://github.com/nodesource/distributions) for different distros.
-* Use tools like [nave](https://github.com/isaacs/nave) or [nvm](https://github.com/creationix/nvm)
-
-In order to install the package you need to have installed in the system the
-pcsclite libraries. For example, in Debian/Ubuntu:
-
-    apt-get install libpcsclite1 libpcsclite-dev
-
-Once they are installed just run:
-
-    npm install pcsclite
-
+> For example, in Debian/Ubuntu:
+```bash
+apt-get install libpcsclite1 libpcsclite-dev
+```
 To run any code you will also need to have installed the pcsc daemon:
+```bash
+apt-get install pcscd
+```
 
-    apt-get install pcscd
+Once you have all needed libraries, you can install using npm:
+
+```bash
+npm install @pokusew/pcsclite --save
+```
+
+
 
 ## Example
 
-```
-var pcsc = require('pcsclite');
+```javascript
+const pcsclite = require('pcsclite');
 
-var pcsc = pcsc();
+const pcsc = pcsclite();
+
 pcsc.on('reader', function(reader) {
 
     console.log('New reader detected', reader.name);
