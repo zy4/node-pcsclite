@@ -1,6 +1,6 @@
 {
   "name": "@pokusew/pcsclite",
-  "version": "0.4.11",
+  "version": "0.4.12",
   "description": "Bindings over PC/SC to access Smart Cards",
   "keywords": [
     "pcsc",
