@@ -14,6 +14,11 @@
 #ifdef _WIN32
 #define MAX_ATR_SIZE 33
 #endif
+#ifdef WIN32
+#define IOCTL_CCID_ESCAPE (0x42000000 + 3500)
+#else
+#define IOCTL_CCID_ESCAPE (0x42000000 + 1)
+#endif
 
 static Nan::Persistent<v8::String> name_symbol;
 static Nan::Persistent<v8::String> connected_symbol;

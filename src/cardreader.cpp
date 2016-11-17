@@ -31,6 +31,9 @@ void CardReader::init(Handle<Object> target) {
     Nan::SetPrototypeTemplate(tpl, "SCARD_SHARE_EXCLUSIVE", Nan::New(SCARD_SHARE_EXCLUSIVE));
     Nan::SetPrototypeTemplate(tpl, "SCARD_SHARE_DIRECT", Nan::New(SCARD_SHARE_DIRECT));
 
+    // Control Code
+    Nan::SetPrototypeTemplate(tpl, "IOCTL_CCID_ESCAPE", Nan::New(IOCTL_CCID_ESCAPE));
+
     // Protocol
     Nan::SetPrototypeTemplate(tpl, "SCARD_PROTOCOL_T0", Nan::New(SCARD_PROTOCOL_T0));
     Nan::SetPrototypeTemplate(tpl, "SCARD_PROTOCOL_T1", Nan::New(SCARD_PROTOCOL_T1));
