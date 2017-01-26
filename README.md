@@ -7,6 +7,36 @@ Bindings over pcsclite to access Smart Cards. Starting with version **0.4.0** it
 > **Looking for library to work easy with NFC tags?**  
 take a look at [nfc-pcsc](https://github.com/pokusew/nfc-pcsc) which offers easy to use high level API for detecting / reading and writing NFC tags and cards
 
+
+## Content
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Installation](#installation)
+- [Example](#example)
+- [Behavior on different OS](#behavior-on-different-os)
+- [API](#api)
+  - [Class: PCSCLite](#class-pcsclite)
+    - [Event:  'error'](#event--error)
+    - [Event:  'reader'](#event--reader)
+    - [pcsclite.close()](#pcscliteclose)
+  - [Class: CardReader](#class-cardreader)
+    - [Event:  'error'](#event--error-1)
+    - [Event:  'end'](#event--end)
+    - [Event:  'status'](#event--status)
+    - [reader.connect([options], callback)](#readerconnectoptions-callback)
+    - [reader.disconnect(disposition, callback)](#readerdisconnectdisposition-callback)
+    - [reader.transmit(input, res_len, protocol, callback)](#readertransmitinput-res_len-protocol-callback)
+    - [reader.control(input, control_code, res_len, callback)](#readercontrolinput-control_code-res_len-callback)
+    - [reader.close()](#readerclose)
+- [FAQ](#faq)
+  - [Can I use this library in my Electron app?](#can-i-use-this-library-in-my-electron-app)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
 ## Installation
 
 In order to install the package you need to **have installed in the system the
@@ -47,7 +77,7 @@ pcsc.on('reader', function(reader) {
     reader.on('status', function(status) {
         console.log('Status(', this.name, '):', status);
         /* check what has changed */
-        var changes = this.state ^ status.state;
+        const changes = this.state ^ status.state;
         if (changes) {
             if ((changes & this.SCARD_STATE_EMPTY) && (status.state & this.SCARD_STATE_EMPTY)) {
                 console.log("card removed");/* card removed */
@@ -89,6 +119,11 @@ pcsc.on('error', function(err) {
     console.log('PCSC error', err.message);
 });
 ```
+
+## Behavior on different OS
+
+TODO document
+
 
 ## API
 
@@ -140,7 +175,8 @@ Emitted whenever the status of the reader changes.
     * *error* `Error`
     * *protocol* `Number` Established protocol to this connection.
 
-Wrapper around [`SCardConnect`](http://pcsclite.alioth.debian.org/pcsc-lite/node12.html). Establishes a connection to the reader.
+Wrapper around [`SCardConnect`](https://pcsclite.alioth.debian.org/api/group__API.html#ga4e515829752e0a8dbc4d630696a8d6a5).
+Establishes a connection to the reader.
 
 #### reader.disconnect(disposition, callback)
 
@@ -148,7 +184,8 @@ Wrapper around [`SCardConnect`](http://pcsclite.alioth.debian.org/pcsc-lite/node
 * *callback* `Function` called when disconnection operation ends
     * *error* `Error`
 
-Wrapper around [`SCardDisconnect`](http://pcsclite.alioth.debian.org/pcsc-lite/node14.html). Terminates a connection to the reader.
+Wrapper around [`SCardDisconnect`](https://pcsclite.alioth.debian.org/api/group__API.html#ga4be198045c73ec0deb79e66c0ca1738a).
+Terminates a connection to the reader.
 
 #### reader.transmit(input, res_len, protocol, callback)
 
@@ -159,7 +196,8 @@ Wrapper around [`SCardDisconnect`](http://pcsclite.alioth.debian.org/pcsc-lite/n
     * *error* `Error`
     * *output* `Buffer`
 
-Wrapper around [`SCardTransmit`](http://pcsclite.alioth.debian.org/pcsc-lite/node17.html). Sends an APDU to the smart card contained in the reader connected to.
+Wrapper around [`SCardTransmit`](https://pcsclite.alioth.debian.org/api/group__API.html#ga9a2d77242a271310269065e64633ab99).
+Sends an APDU to the smart card contained in the reader connected to.
 
 #### reader.control(input, control_code, res_len, callback)
 
@@ -170,8 +208,24 @@ Wrapper around [`SCardTransmit`](http://pcsclite.alioth.debian.org/pcsc-lite/nod
     * *error* `Error`
     * *output* `Buffer`
 
-Wrapper around [`SCardControl`](http://pcsclite.alioth.debian.org/pcsc-lite/node18.html). Sends a command directly to the IFD Handler (reader driver) to be processed by the reader.
+Wrapper around [`SCardControl`](https://pcsclite.alioth.debian.org/api/group__API.html#gac3454d4657110fd7f753b2d3d8f4e32f).
+Sends a command directly to the IFD Handler (reader driver) to be processed by the reader.
 
 #### reader.close()
 
-It frees the resources associated with this CardReader instance. At a low level it calls [`SCardCancel`](http://pcsclite.alioth.debian.org/pcsc-lite/node21.html) so it stops watching for the reader status changes.
+It frees the resources associated with this CardReader instance.
+At a low level it calls [`SCardCancel`](https://pcsclite.alioth.debian.org/api/group__API.html#gaacbbc0c6d6c0cbbeb4f4debf6fbeeee6) so it stops watching for the reader status changes.
+
+
+## FAQ
+
+### Can I use this library in my [Electron](http://electron.atom.io/) app?
+
+Yes, you can! It works well.
+
+But please read carefully [Using Native Node Modules](http://electron.atom.io/docs/tutorial/using-native-node-modules/) guide in Electron documentation to fully understand the problematic.
+
+**Note**, that because of Node Native Modules, you must build your app on target platform (you must run Windows build on Windows machine, etc.).  
+You can use CI/CD server to build your app for certain platforms.  
+For Windows, I recommend you to use [AppVeyor](https://appveyor.com/).  
+For macOS and Linux build, there are plenty of services to choose from, for example [CircleCI](https://circleci.com/), [Travis CI](https://travis-ci.com/) [CodeShip](https://codeship.com/).
