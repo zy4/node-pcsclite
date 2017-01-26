@@ -287,6 +287,11 @@ LONG PCSCLite::get_card_readers(PCSCLite* pcsclite, AsyncResult* async_result) {
             result = get_card_readers(pcsclite, async_result);
         }
 #endif
+        if (result == SCARD_E_NO_SERVICE || result == SCARD_E_SERVICE_STOPPED) {
+            SCardReleaseContext(pcsclite->m_card_context);
+            SCardEstablishContext(SCARD_SCOPE_SYSTEM, NULL, NULL, &pcsclite->m_card_context);
+            result = get_card_readers(pcsclite, async_result);
+        }
     } else {
         /* Store the readers_name in the baton */
         async_result->readers_name = readers_name;
