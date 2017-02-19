@@ -28,10 +28,48 @@ PCSCLite::PCSCLite(): m_card_context(0),
     assert(uv_mutex_init(&m_mutex) == 0);
     assert(uv_cond_init(&m_cond) == 0);
 
-    LONG result = SCardEstablishContext(SCARD_SCOPE_SYSTEM,
-                                        NULL,
-                                        NULL,
-                                        &m_card_context);
+#ifdef _WIN32
+    HKEY hKey;
+    DWORD startStatus, datacb = sizeof(DWORD);
+    LONG _res;
+    _res = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "System\\CurrentControlSet\\Services\\SCardSvr", 0, KEY_READ, &hKey);
+    if (_res != ERROR_SUCCESS) {
+        printf("Reg Open Key exited with %d\n", _res);
+        goto postServiceCheck;
+    }
+    _res = RegQueryValueEx(hKey, "Start", NULL, NULL, (LPBYTE)&startStatus, &datacb);
+    if (_res != ERROR_SUCCESS) {
+        printf("Reg Query Value exited with %d\n", _res);
+        goto postServiceCheck;
+    }
+    if (startStatus != 2) {
+        SHELLEXECUTEINFO seInfo = {0};
+        seInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+        seInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
+        seInfo.hwnd = NULL;
+        seInfo.lpVerb = "runas";
+        seInfo.lpFile = "sc.exe";
+        seInfo.lpParameters = "config SCardSvr start=auto";
+        seInfo.lpDirectory = NULL;
+        seInfo.nShow = SW_SHOWNORMAL;
+        seInfo.hInstApp = NULL;
+        if (!ShellExecuteEx(&seInfo)) {
+            printf("Shell Execute failed with %d\n", GetLastError());
+            goto postServiceCheck;
+        }
+        WaitForSingleObject(seInfo.hProcess, INFINITE);
+        CloseHandle(seInfo.hProcess);
+    }
+#endif // _WIN32
+
+postServiceCheck:
+    LONG result;
+    do {
+        result = SCardEstablishContext(SCARD_SCOPE_SYSTEM,
+                                            NULL,
+                                            NULL,
+                                            &m_card_context);
+    } while(result == SCARD_E_NO_SERVICE || result == SCARD_E_SERVICE_STOPPED);
     if (result != SCARD_S_SUCCESS) {
         Nan::ThrowError(error_msg("SCardEstablishContext", result).c_str());
     } else {
