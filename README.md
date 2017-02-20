@@ -222,7 +222,7 @@ At a low level it calls [`SCardCancel`](https://pcsclite.alioth.debian.org/api/g
 
 ### Can I use this library in my [Electron](http://electron.atom.io/) app?
 
-Yes, you can! It works well.
+**Yes, you can!** It works well.
 
 But please read carefully [Using Native Node Modules](http://electron.atom.io/docs/tutorial/using-native-node-modules/) guide in Electron documentation to fully understand the problematic.
 
