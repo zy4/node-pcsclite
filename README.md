@@ -145,7 +145,7 @@ Emitted whenever a new card reader is detected.
 
 #### pcsclite.close()
 
-It frees the resources associated with this PCSCLite instance. At a low level it calls [`SCardCancel`](http://pcsclite.alioth.debian.org/pcsc-lite/node21.html) so it stops watching for new readers.
+It frees the resources associated with this PCSCLite instance. At a low level it calls [`SCardCancel`](https://pcsclite.alioth.debian.org/api/group__API.html#gaacbbc0c6d6c0cbbeb4f4debf6fbeeee6) so it stops watching for new readers.
 
 
 ### Class: CardReader
@@ -163,7 +163,7 @@ Emitted when the card reader has been removed.
 #### Event:  'status'
 
 * *status* `Object`.
-    * *state* The current status of the card reader as returned by [`SCardGetStatusChange`](http://pcsclite.alioth.debian.org/pcsc-lite/node20.html)
+    * *state* The current status of the card reader as returned by [`SCardGetStatusChange`](https://pcsclite.alioth.debian.org/api/group__API.html#ga33247d5d1257d59e55647c3bb717db24)
     * *atr* ATR of the card inserted (if any)
 
 Emitted whenever the status of the reader changes.
@@ -221,11 +221,11 @@ At a low level it calls [`SCardCancel`](https://pcsclite.alioth.debian.org/api/g
 
 ## FAQ
 
-### Can I use this library in my [Electron](http://electron.atom.io/) app?
+### Can I use this library in my [Electron](https://electron.atom.io/) app?
 
 **Yes, you can!** It works well.
 
-But please read carefully [Using Native Node Modules](http://electron.atom.io/docs/tutorial/using-native-node-modules/) guide in Electron documentation to fully understand the problematic.
+But please read carefully [Using Native Node Modules](https://electron.atom.io/docs/tutorial/using-native-node-modules/) guide in Electron documentation to fully understand the problematic.
 
 **Note**, that because of Node Native Modules, you must build your app on target platform (you must run Windows build on Windows machine, etc.).  
 You can use CI/CD server to build your app for certain platforms.  
