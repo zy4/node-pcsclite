@@ -34,6 +34,7 @@ take a look at [nfc-pcsc](https://github.com/pokusew/nfc-pcsc) which offers easy
     - [reader.close()](#readerclose)
 - [FAQ](#faq)
   - [Can I use this library in my Electron app?](#can-i-use-this-library-in-my-electron-app)
+- [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -230,3 +231,7 @@ But please read carefully [Using Native Node Modules](http://electron.atom.io/do
 You can use CI/CD server to build your app for certain platforms.  
 For Windows, I recommend you to use [AppVeyor](https://appveyor.com/).  
 For macOS and Linux build, there are plenty of services to choose from, for example [CircleCI](https://circleci.com/), [Travis CI](https://travis-ci.com/) [CodeShip](https://codeship.com/).
+
+## License
+
+[ISC](/LICENSE.md)

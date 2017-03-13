@@ -1,4 +1,7 @@
-Copyright (c) 2013, Santiago Gimeno <santiago.gimeno@gmail>
+ISC License
+
+Copyright (c) 2016-present, Martin Endler  
+Copyright (c) 2013-present, Santiago Gimeno <santiago.gimeno@gmail.com>
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above

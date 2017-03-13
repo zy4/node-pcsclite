@@ -3,9 +3,9 @@
   "version": "0.4.17",
   "description": "Bindings over PC/SC to access Smart Cards",
   "keywords": [
+    "nfc",
     "pcsc",
     "pcsclite",
-    "nfc",
     "smartcards"
   ],
   "homepage": "https://github.com/pokusew/node-pcsclite#readme",
@@ -13,7 +13,17 @@
     "url": "https://github.com/pokusew/node-pcsclite/issues"
   },
   "license": "ISC",
-  "author": "Santiago Gimeno <santiago.gimeno@gmail.com>",
+  "author": {
+    "name": "Santiago Gimeno",
+    "email": "santiago.gimeno@gmail.com",
+    "url": "https://github.com/santigimeno"
+  },
+  "contributors": [
+    {
+      "name": "Martin Endler",
+      "url": "https://github.com/pokusew"
+    }
+  ],
   "main": "lib/pcsclite.js",
   "directories": {
     "test": "test"
