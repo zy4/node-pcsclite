@@ -70,84 +70,84 @@ const pcsc = pcsclite();
 
 pcsc.on('reader', (reader) => {
 
-	console.log('New reader detected', reader.name);
+    console.log('New reader detected', reader.name);
 
-	reader.on('error', err => {
-		console.log('Error(', reader.name, '):', err.message);
-	});
+    reader.on('error', err => {
+        console.log('Error(', reader.name, '):', err.message);
+    });
 
-	reader.on('status', (status) => {
+    reader.on('status', (status) => {
 
-		console.log('Status(', reader.name, '):', status);
+        console.log('Status(', reader.name, '):', status);
 
-		// check what has changed
-		const changes = reader.state ^ status.state;
+        // check what has changed
+        const changes = reader.state ^ status.state;
 
-		if (!changes) {
-			return;
-		}
+        if (!changes) {
+            return;
+        }
 
-		if ((changes & reader.SCARD_STATE_EMPTY) && (status.state & reader.SCARD_STATE_EMPTY)) {
+        if ((changes & reader.SCARD_STATE_EMPTY) && (status.state & reader.SCARD_STATE_EMPTY)) {
 
-			console.log("card removed");
+            console.log("card removed");
 
-			reader.disconnect(reader.SCARD_LEAVE_CARD, err => {
+            reader.disconnect(reader.SCARD_LEAVE_CARD, err => {
 
-				if (err) {
-					console.log(err);
-					return;
-				}
+                if (err) {
+                    console.log(err);
+                    return;
+                }
 
-				console.log('Disconnected');
+                console.log('Disconnected');
 
-			});
+            });
 
-			return;
+            return;
 
-		}
+        }
 
-		if ((changes & reader.SCARD_STATE_EMPTY) && (status.state & reader.SCARD_STATE_EMPTY)) {
+        if ((changes & reader.SCARD_STATE_EMPTY) && (status.state & reader.SCARD_STATE_EMPTY)) {
 
-			console.log("card inserted");
+            console.log("card inserted");
 
-			reader.connect({ share_mode: reader.SCARD_SHARE_SHARED }, (err, protocol) => {
+            reader.connect({ share_mode: reader.SCARD_SHARE_SHARED }, (err, protocol) => {
 
-				if (err) {
-					console.log(err);
-					return;
-				}
+                if (err) {
+                    console.log(err);
+                    return;
+                }
 
-				console.log('Protocol(', reader.name, '):', protocol);
+                console.log('Protocol(', reader.name, '):', protocol);
 
-				reader.transmit(Buffer.from([0x00, 0xB0, 0x00, 0x00, 0x20]), 40, protocol, (err, data) => {
+                reader.transmit(Buffer.from([0x00, 0xB0, 0x00, 0x00, 0x20]), 40, protocol, (err, data) => {
 
-					if (err) {
-						console.log(err);
-						return;
-					}
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
 
-					console.log('Data received', data);
-					reader.close();
-					pcsc.close();
+                    console.log('Data received', data);
+                    reader.close();
+                    pcsc.close();
 
-				});
+                });
 
-			});
+            });
 
-			// noinspection UnnecessaryReturnStatementJS
-			return;
-		}
+            // noinspection UnnecessaryReturnStatementJS
+            return;
+        }
 
-	});
+    });
 
-	reader.on('end', () => {
-		console.log('Reader', reader.name, 'removed');
-	});
+    reader.on('end', () => {
+        console.log('Reader', reader.name, 'removed');
+    });
 
 });
 
 pcsc.on('error', err => {
-	console.log('PCSC error', err.message);
+    console.log('PCSC error', err.message);
 });
 ```
 
