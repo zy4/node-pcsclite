@@ -147,6 +147,9 @@ Emitted whenever a new card reader is detected.
 
 It frees the resources associated with this PCSCLite instance. At a low level it calls [`SCardCancel`](https://pcsclite.alioth.debian.org/api/group__API.html#gaacbbc0c6d6c0cbbeb4f4debf6fbeeee6) so it stops watching for new readers.
 
+#### pcsclite.readers
+
+An object containing all detected readers by name. Updated as readers are attached and removed.
 
 ### Class: CardReader
 
