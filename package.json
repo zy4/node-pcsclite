@@ -29,6 +29,7 @@
     }
   ],
   "main": "lib/pcsclite.js",
+  "types": "index.d.ts",
   "directories": {
     "test": "test"
   },
