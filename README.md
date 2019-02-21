@@ -64,7 +64,7 @@ npm install @pokusew/pcsclite --save
 ## Example
 
 ```javascript
-const pcsclite = require('pcsclite');
+const pcsclite = require('@pokusew/pcsclite');
 
 const pcsc = pcsclite();
 
@@ -87,6 +87,7 @@ pcsc.on('reader', (reader) => {
             return;
         }
 
+		// noinspection JSBitwiseOperatorUsage
         if ((changes & reader.SCARD_STATE_EMPTY) && (status.state & reader.SCARD_STATE_EMPTY)) {
 
             console.log("card removed");
@@ -106,6 +107,7 @@ pcsc.on('reader', (reader) => {
 
         }
 
+		// noinspection JSBitwiseOperatorUsage
         if ((changes & reader.SCARD_STATE_EMPTY) && (status.state & reader.SCARD_STATE_EMPTY)) {
 
             console.log("card inserted");
