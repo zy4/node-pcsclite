@@ -38,13 +38,13 @@
     "test": "mocha"
   },
   "dependencies": {
-    "bindings": "^1.4.0",
-    "nan": "^2.12.1"
+    "bindings": "^1.5.0",
+    "nan": "^2.14.0"
   },
   "devDependencies": {
-    "mocha": "^6.0.0",
+    "mocha": "^6.1.4",
     "should": "^13.2.3",
-    "sinon": "^7.2.4"
+    "sinon": "^7.3.2"
   },
   "gypfile": true
 }

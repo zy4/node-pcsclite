@@ -6,7 +6,7 @@ using namespace node;
 
 Nan::Persistent<Function> PCSCLite::constructor;
 
-void PCSCLite::init(Handle<Object> target) {
+void PCSCLite::init(Local<Object> target) {
 
     // Prepare constructor template
     Local<FunctionTemplate> tpl = Nan::New<FunctionTemplate>(New);
