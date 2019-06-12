@@ -15,9 +15,9 @@ void PCSCLite::init(Local<Object> target) {
     // Prototype
     Nan::SetPrototypeTemplate(tpl, "start", Nan::New<FunctionTemplate>(Start));
     Nan::SetPrototypeTemplate(tpl, "close", Nan::New<FunctionTemplate>(Close));
-
-    constructor.Reset(tpl->GetFunction());
-    target->Set(Nan::New("PCSCLite").ToLocalChecked(), tpl->GetFunction());
+    Local<Context> context = Nan::GetCurrentContext();
+    constructor.Reset(tpl->GetFunction(context).ToLocalChecked());
+    target->Set(Nan::New("PCSCLite").ToLocalChecked(), tpl->GetFunction(context).ToLocalChecked());
 }
 
 PCSCLite::PCSCLite(): m_card_context(0),

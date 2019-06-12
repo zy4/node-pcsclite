@@ -6,7 +6,7 @@ using namespace node;
 
 Nan::Persistent<Function> CardReader::constructor;
 
-void CardReader::init(Handle<Object> target) {
+void CardReader::init(v8::Local<v8::Object> target) {
 
      // Prepare constructor template
     Local<FunctionTemplate> tpl = Nan::New<FunctionTemplate>(New);
@@ -88,7 +88,7 @@ NAN_METHOD(CardReader::New) {
 
     Nan::HandleScope scope;
 
-    v8::String::Utf8Value reader_name(info[0]->ToString());
+    Nan::Utf8String reader_name(Nan::New(info[0]).ToLocalChecked());
     CardReader* obj = new CardReader(*reader_name);
     obj->Wrap(info.Holder());
     obj->handle()->Set(Nan::New(name_symbol), info[0]->ToString());
@@ -134,8 +134,8 @@ NAN_METHOD(CardReader::Connect) {
     }
 
     ConnectInput* ci = new ConnectInput();
-    ci->share_mode = info[0]->Uint32Value();
-    ci->pref_protocol = info[1]->Uint32Value();
+    ci->share_mode = info[0]->Uint32Value(context).FromJust();
+    ci->pref_protocol = info[1]->Uint32Value(context).FromJust();
     Local<Function> cb = Local<Function>::Cast(info[2]);
 
     // This creates our work request, including the libuv struct.
@@ -215,7 +215,7 @@ NAN_METHOD(CardReader::Transmit) {
         return Nan::ThrowError("Fourth argument must be a callback function");
     }
 
-    Local<Object> buffer_data = info[0]->ToObject();
+    Local<Object> buffer_data = Nan::New(info[0]).ToLocalChecked();
     uint32_t out_len = info[1]->Uint32Value();
     uint32_t protocol = info[2]->Uint32Value();
     Local<Function> cb = Local<Function>::Cast(info[3]);
